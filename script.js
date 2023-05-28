@@ -28,8 +28,14 @@ btnRoll.addEventListener('click', function () {
     document.querySelector(`#current--${activePlayer}`).textContent =
       currentScore;
   } else {
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.remove('player--active');
     document.querySelector(`#current--${activePlayer}`).textContent = 0;
     activePlayer = activePlayer === 0 ? 1 : 0;
     currentScore = 0;
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--active');
   }
 });
