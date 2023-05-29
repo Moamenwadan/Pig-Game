@@ -9,13 +9,27 @@ const current1El = document.querySelector('#current--1');
 const image = document.querySelector('img');
 
 const btnRoll = document.querySelector('.btn--roll');
+const btnHold = document.querySelector('.btn--hold');
 
 score0El.textContent = 0;
 score1El.textContent = 0;
 image.classList.add('hidden');
 
+let scores = [0, 0];
 let currentScore = 0;
 let activePlayer = 0;
+
+const switchPlayer = function () {
+  document
+    .querySelector(`.player--${activePlayer}`)
+    .classList.remove('player--active');
+  document.querySelector(`#current--${activePlayer}`).textContent = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  currentScore = 0;
+  document
+    .querySelector(`.player--${activePlayer}`)
+    .classList.add('player--active');
+};
 
 btnRoll.addEventListener('click', function () {
   let dice = Math.trunc(Math.random() * 6) + 1;
@@ -28,14 +42,19 @@ btnRoll.addEventListener('click', function () {
     document.querySelector(`#current--${activePlayer}`).textContent =
       currentScore;
   } else {
+    switchPlayer();
+  }
+});
+
+btnHold.addEventListener('click', function () {
+  scores[activePlayer] += currentScore;
+  document.querySelector(`#score--${activePlayer}`).textContent =
+    scores[activePlayer];
+  if (scores[activePlayer] >= 20) {
     document
       .querySelector(`.player--${activePlayer}`)
-      .classList.remove('player--active');
-    document.querySelector(`#current--${activePlayer}`).textContent = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    currentScore = 0;
-    document
-      .querySelector(`.player--${activePlayer}`)
-      .classList.add('player--active');
+      .classList.add('player--winner');
+  } else {
+    switchPlayer();
   }
 });
