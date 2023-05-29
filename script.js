@@ -18,6 +18,7 @@ image.classList.add('hidden');
 let scores = [0, 0];
 let currentScore = 0;
 let activePlayer = 0;
+let playing = true;
 
 const switchPlayer = function () {
   document
@@ -32,29 +33,34 @@ const switchPlayer = function () {
 };
 
 btnRoll.addEventListener('click', function () {
-  let dice = Math.trunc(Math.random() * 6) + 1;
-  console.log(dice);
-  image.src = `dice-${dice}.png`;
-  image.classList.remove('hidden');
+  if (playing) {
+    let dice = Math.trunc(Math.random() * 6) + 1;
+    console.log(dice);
+    image.src = `dice-${dice}.png`;
+    image.classList.remove('hidden');
 
-  if (dice !== 1) {
-    currentScore += dice;
-    document.querySelector(`#current--${activePlayer}`).textContent =
-      currentScore;
-  } else {
-    switchPlayer();
+    if (dice !== 1) {
+      currentScore += dice;
+      document.querySelector(`#current--${activePlayer}`).textContent =
+        currentScore;
+    } else {
+      switchPlayer();
+    }
   }
 });
 
 btnHold.addEventListener('click', function () {
-  scores[activePlayer] += currentScore;
-  document.querySelector(`#score--${activePlayer}`).textContent =
-    scores[activePlayer];
-  if (scores[activePlayer] >= 20) {
-    document
-      .querySelector(`.player--${activePlayer}`)
-      .classList.add('player--winner');
-  } else {
-    switchPlayer();
+  if (playing) {
+    scores[activePlayer] += currentScore;
+    document.querySelector(`#score--${activePlayer}`).textContent =
+      scores[activePlayer];
+    if (scores[activePlayer] >= 20) {
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add('player--winner');
+      playing = false;
+    } else {
+      switchPlayer();
+    }
   }
 });
