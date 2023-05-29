@@ -10,15 +10,34 @@ const image = document.querySelector('img');
 
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
+const btnNew = document.querySelector('.btn--new');
 
-score0El.textContent = 0;
-score1El.textContent = 0;
-image.classList.add('hidden');
+// score0El.textContent = 0;
+// score1El.textContent = 0;
+// image.classList.add('hidden');
 
-let scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true;
+// let scores = [0, 0];
+// let currentScore = 0;
+// let activePlayer = 0;
+// let playing = true;
+
+let scores, activePlayer, currentScore, playing;
+const init = function () {
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true;
+  playeroEl.classList.add('player--active');
+  player1El.classList.remove('player--active');
+  playeroEl.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+  image.classList.add('hidden');
+};
+init();
 
 const switchPlayer = function () {
   document
@@ -63,4 +82,8 @@ btnHold.addEventListener('click', function () {
       switchPlayer();
     }
   }
+});
+
+btnNew.addEventListener('click', function () {
+  init();
 });
